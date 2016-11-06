@@ -1,0 +1,28 @@
+name: youtube-dl
+version: "daily"
+summary: YouTube Downloader
+description: |
+  youtube-dl is a small command-line program to download videos from
+  YouTube.com and a few more sites.
+
+apps:
+  youtube-dl:
+    command: usr/bin/python3 $SNAP/usr/bin/youtube-dl
+    plugs: [home, network, network-bind]
+  youtube-dl-gui:
+    command: desktop-launch $SNAP/usr/bin/youtube_dl_gui
+
+parts:
+  youtube-dl:
+    after: [ ffmpeg ]
+    plugin: python3
+    source: https://github.com/rg3/youtube-dl.git
+    source-type: git
+  youtube-dl-gui:
+    after: [ desktop/qt5 ]
+    plugin: python2
+    source: .
+    stage-packages: 
+      - python-wxgtk2.8
+      - python-wxtools
+
